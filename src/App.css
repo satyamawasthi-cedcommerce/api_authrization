@@ -4,4 +4,10 @@
 form{
   text-align: left;
 }
+.containerDiv{
+  text-align: left;
+  width:50%;
+  margin-left: 25%;
+  margin-top: 10%;
+}
 

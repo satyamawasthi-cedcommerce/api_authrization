@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { FormLayout, TextField } from "@shopify/polaris";
+import { Button } from "@shopify/polaris";
+import { Card } from "@shopify/polaris";
+import { Text } from "@shopify/polaris";
 function Login() {
   const navigate = useNavigate();
   var j = 1;
@@ -22,22 +25,52 @@ function Login() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          sessionStorage.setItem(`token ${j++}`, data.data.token);
-          setSession(sessionStorage);
+          sessionStorage.setItem(`token`, data.data.token);
+          setSession(data.data.token);
           setUser1(data);
           navigate("/login_true");
         } else {
-          console.log("error");
+          alert("Kindly enter correct user credentials");
         }
       }, []);
 
-    console.log(user1.success);
+    // console.log(user1.data.token);
   };
-
+  const handleClearButtonClick = useCallback(() => setUser(""), []);
   return (
     <>
       <div className="containerDiv">
-        <form onSubmit={authenticateLogin}>
+        <Card sectioned>
+          <Text variant="heading2xl" as="h1">
+            Login Authentication
+          </Text>
+          <FormLayout>
+            <TextField
+              label="User Name"
+              value={user.userName ?? ""}
+              onChange={(value) => setUser({ ...user, userName: value })}
+              autoComplete="off"
+              requiredIndicator
+              clearButton
+              onClearButtonClick={handleClearButtonClick}
+            />
+            <TextField
+              type="password"
+              label="Password"
+              value={user.password ?? ""}
+              onChange={(value) => setUser({ ...user, password: value })}
+              autoComplete="email"
+              requiredIndicator
+              clearButton
+              onClearButtonClick={handleClearButtonClick}
+            />
+            <Button primary onClick={authenticateLogin}>
+              Log In user
+            </Button>
+          </FormLayout>
+        </Card>
+
+        {/* <form>
           <label htmlFor="UserName">UserName</label>
           <br />
           <input
@@ -51,17 +84,10 @@ function Login() {
           <br />
           <lable htmlFor="PassWord">Password</lable>
           <br />
-          <input
-            type="password"
-            placeholder="Enter Password"
-            onChange={(event) =>
-              setUser({ ...user, password: event.target.value })
-            }
-            required
-          />
+          <input type="password" placeholder="Enter Password" required />
           <br />
           <input type="submit" value="Register" />
-        </form>
+        </form> */}
       </div>
     </>
   );
