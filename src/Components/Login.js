@@ -6,7 +6,6 @@ import { Card } from "@shopify/polaris";
 import { Text } from "@shopify/polaris";
 function Login() {
   const navigate = useNavigate();
-  var j = 1;
   const [user, setUser] = useState({});
   const [user1, setUser1] = useState({});
   const [session, setSession] = useState("");
@@ -33,8 +32,6 @@ function Login() {
           alert("Kindly enter correct user credentials");
         }
       }, []);
-
-    // console.log(user1.data.token);
   };
   const handleClearButtonClick = useCallback(() => setUser(""), []);
   return (
@@ -69,25 +66,6 @@ function Login() {
             </Button>
           </FormLayout>
         </Card>
-
-        {/* <form>
-          <label htmlFor="UserName">UserName</label>
-          <br />
-          <input
-            type="text"
-            placeholder="Enter UserName"
-            onChange={(event) =>
-              setUser({ ...user, userName: event.target.value })
-            }
-            required
-          />
-          <br />
-          <lable htmlFor="PassWord">Password</lable>
-          <br />
-          <input type="password" placeholder="Enter Password" required />
-          <br />
-          <input type="submit" value="Register" />
-        </form> */}
       </div>
     </>
   );
